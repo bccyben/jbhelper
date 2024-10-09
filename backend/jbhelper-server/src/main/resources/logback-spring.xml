@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <property name="LOG_FILE" value="/apps/logs/jbhelper" />
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date{YYYY-MM-dd HH:mm:ss.SSS} %-10([%thread]) %-5level %logger{5} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}
+      </pattern>
+      <charset>utf8</charset>
+    </encoder>
+  </appender>
+
+  <springProfile name="!local">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <encoder>
+        <pattern>%date{YYYY-MM-dd HH:mm:ss.SSS} %-5level %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}</pattern>
+        <charset>utf8</charset>
+      </encoder>
+      <file>${LOG_FILE}.log</file>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.log.tar.gz</fileNamePattern>
+        <maxHistory>90</maxHistory>
+      </rollingPolicy>
+    </appender>
+  </springProfile>
+
+  <springProfile name="local">
+    <logger name="org.springframework" level="INFO" additivity="false">
+      <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.hibernate" level="INFO" additivity="false">
+      <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+      <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
+      <appender-ref ref="CONSOLE" />
+    </logger>
+    <root level="DEBUG">
+      <appender-ref ref="CONSOLE" />
+    </root>
+  </springProfile>
+
+  <springProfile name="prd">
+    <logger name="org.springframework" level="INFO" additivity="false">
+      <appender-ref ref="FILE" />
+    </logger>
+    <logger name="org.hibernate" level="INFO" additivity="false">
+      <appender-ref ref="FILE" />
+    </logger>
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+      <appender-ref ref="FILE" />
+    </logger>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
+      <appender-ref ref="FILE" />
+    </logger>
+    <root level="DEBUG">
+      <appender-ref ref="FILE" />
+    </root>
+  </springProfile>
+
+</configuration>

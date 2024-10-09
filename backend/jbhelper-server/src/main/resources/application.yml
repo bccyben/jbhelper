@@ -1,0 +1,19 @@
+spring.profiles.active: local
+
+server:
+  port: 8095
+  servlet.context-path: /app
+
+# disable swagger ui
+springdoc:
+  swagger-ui.enabled: false
+  api-docs.enabled: false
+
+# common database config
+spring.jpa:
+  open-in-view: false
+  hibernate.ddl-auto: none
+  database-platform: org.hibernate.dialect.H2Dialect
+
+#TRANSACTION_READ_COMMITTED
+# spring.jpa.properties.hibernate.connection.isolation: 2 
