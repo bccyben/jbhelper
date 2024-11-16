@@ -1,5 +1,5 @@
 # jbhelper
-Thie is a springbott project sample for japanese bussiness
+Thie is a springboot project sample for japanese bussiness
 
 # pdf
 日本語pdfを利用する場合

@@ -37,5 +37,6 @@ public class UserInfoFilter extends OncePerRequestFilter {
             ipAddress = request.getRemoteAddr();
         }
         log.info("ipAddress:{}", ipAddress);
+        filterChain.doFilter(request, response);
     }
 }
